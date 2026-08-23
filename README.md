@@ -25,7 +25,7 @@ This allows the application to map the aggregated football statistics into ONNX 
 *   **Backend Framework:** Java, Spring Boot
 *   **AI/ML Execution:** ONNX Runtime for Java
 *   **Frontend Interface:** Thymeleaf, Tailwind CSS
-*   **Data Provider:** API-Football (via RapidAPI)
+*   **Data Providers:** FBref (Training Dataset) & API-Football via RapidAPI (Live Inference)
 
 ## Local Setup Configuration
 To run this application locally, you must provide your own RapidAPI credentials via environment variables to ensure sensitive data remains out of version control.
