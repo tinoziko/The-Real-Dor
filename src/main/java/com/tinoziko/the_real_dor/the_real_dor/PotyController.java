@@ -1,5 +1,6 @@
 package com.tinoziko.the_real_dor.the_real_dor;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +19,13 @@ public class PotyController {
     }
 
     @GetMapping("/")
-    public String getRankings(Model model) {
-        System.out.println("----> GENERATING HARDCODED RANKINGS...");
+    public String getRankings(
+            @RequestParam(value = "season", defaultValue = "2024") int season,
+            Model model) {
 
+        System.out.println("----> GENERATING DYNAMIC RANKINGS FOR SEASON: " + season);
 
-        int targetSeason = 2024;
-
+        model.addAttribute("selectedSeason", season);
 
         int[] globalContenders = {278, 184, 386828, 1100, 1485, 44, 483, 153, 19617, 81013, 128384, 263482, 22224, 22090};
 
@@ -31,11 +33,9 @@ public class PotyController {
 
         for (int id : globalContenders) {
             try {
-
-                PlayerStats liveStats = apiService.getLivePlayerStats(id, targetSeason);
+                PlayerStats liveStats = apiService.getLivePlayerStats(id, season);
 
                 if (liveStats != null && liveStats.getTotalMinutes() > 0) {
-
                     double predictedScore = predictionService.predictScore(liveStats);
                     liveStats.setAiScore(predictedScore);
 
@@ -50,6 +50,10 @@ public class PotyController {
         }
 
         rankedPlayers.sort((p1, p2) -> Double.compare(p2.getAiScore(), p1.getAiScore()));
+
+        if (rankedPlayers.size() > 10) {
+            rankedPlayers = rankedPlayers.subList(0, 10);
+        }
 
         model.addAttribute("players", rankedPlayers);
 

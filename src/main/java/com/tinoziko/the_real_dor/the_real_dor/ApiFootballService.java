@@ -4,12 +4,14 @@ package com.tinoziko.the_real_dor.the_real_dor;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.cache.annotation.Cacheable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class ApiFootballService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public PlayerStats getLivePlayerStats(int playerId, int season) {
+    @Cacheable(value = "playerStats", key = "#playerId + '-' + #season", unless = "#result == null")    public PlayerStats getLivePlayerStats(int playerId, int season) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.set("x-rapidapi-key", apiKey);

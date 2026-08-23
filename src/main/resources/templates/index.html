@@ -47,6 +47,19 @@
             <span class="material-symbols-outlined fill-icon !text-4xl">military_tech</span>
         </div>
         <h1 class="font-headline-lg text-headline-lg font-extrabold text-primary-container tracking-tight uppercase mx-4 text-4xl md:text-5xl lg:text-6xl">THE REAL D'OR</h1>
+
+        <form method="get" action="/" class="mt-stack-md flex justify-center">
+            <div class="relative">
+                <select name="season" onchange="this.form.submit()"
+                        class="appearance-none bg-surface-container border border-outline-variant hover:border-primary-container text-primary-container px-6 py-2 pr-10 font-label-caps uppercase tracking-widest text-sm focus:outline-none focus:ring-0 transition-colors cursor-pointer rounded-none">
+                    <option value="2024" th:selected="${selectedSeason == 2024}">2024 / 2025 Season</option>
+                    <option value="2023" th:selected="${selectedSeason == 2023}">2023 / 2024 Season</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-primary-container">
+                    <span class="material-symbols-outlined !text-xl">arrow_drop_down</span>
+                </div>
+            </div>
+        </form>
     </header>
 
     <section aria-labelledby="winner-heading" class="flex flex-col gap-stack-md" th:each="player, iterStat : ${players}" th:if="${iterStat.index == 0}">
@@ -149,7 +162,7 @@
     <section aria-labelledby="rankings-heading" class="flex flex-col gap-stack-lg">
         <div class="flex items-end justify-between border-b border-outline-variant pb-stack-sm">
             <h2 class="font-headline-md text-headline-md text-on-background tracking-wide uppercase font-bold" id="rankings-heading">The Final Rankings</h2>
-            <span class="font-label-caps text-label-caps text-secondary tracking-widest text-sm">Global Leaderboard</span>
+
         </div>
 
         <ol class="flex flex-col m-0 p-0 list-none border-t border-outline-variant gap-4">
@@ -241,7 +254,8 @@
 </main>
 
 <footer class="w-full text-center py-stack-lg border-t border-outline-variant mt-stack-lg bg-surface-dim">
-    <h1 class="font-label-caps text-sm text-secondary uppercase tracking-[0.2em] font-medium">Powered By ONNX and Spring</h1>
+    <h1 class="font-label-caps text-sm text-secondary uppercase tracking-[0.2em] font-medium">A Tinotenda Ziko Project Powered By ONNX and Spring</h1>
+
 </footer>
 
 </body>
